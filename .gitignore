@@ -11,6 +11,7 @@ __pycache__/
 env/
 venv/
 .venv/
+.djangovenv/
 
 ### Project specific ###
 settings_local.py
