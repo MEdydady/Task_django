@@ -2,13 +2,14 @@
 <html lang="ru">
 <head>
     <meta charset="UTF-8">
-    <title>Рецепты</title>
+    <title>Рецепты444</title>
 </head>
 <body>
-{% for ingredient, amount in recipe.items %}
+ {% for ingredient, amount in recipe.items %}
     <p>{{ ingredient }}: {{ amount }}</p>
 {% empty %}
     <p>Такого рецепта не знаю :(</p>
-{% endfor %}
+{% endfor %} 
+{{ recipe }}
 </body>
 </html>
