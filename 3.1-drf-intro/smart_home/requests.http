@@ -43,3 +43,11 @@ Content-Type: application/json
 # получение информации по датчику
 GET {{baseUrl}}/sensors/1/
 Content-Type: application/json
+
+###
+
+# вывести список измерений
+GET {{baseUrl}}/measurements/?sensor=<pk>
+Content-Type: application/json
+
+
