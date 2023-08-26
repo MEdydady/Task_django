@@ -8,11 +8,30 @@ Content-Type: application/json
 
 {
   "title": "Помидор",
-  "description": "Лучшие помидоры на рынке"
+  "description": "Лучшие помидоры на рынке",
 }
 
 ###
+# создание продукта
+POST {{baseUrl}}/products/
+Content-Type: application/json
 
+{
+  "title": "Яблоко",
+  "description": "Лучшие , просто лучшие яблоки"
+}
+###
+# создание продукта
+POST {{baseUrl}}/products/
+Content-Type: application/json
+
+{
+  "title": "Кабачок",
+  "description": "Он самый )"
+}
+
+
+###
 # получение продуктов
 GET {{baseUrl}}/products/
 Content-Type: application/json
@@ -30,13 +49,13 @@ Content-Type: application/json
 ###
 
 # удаление продукта
-DELETE {{baseUrl}}/products/1/
+DELETE {{baseUrl}}/products/3/
 Content-Type: application/json
 
 ###
 
 # поиск продуктов по названию и описанию
-GET {{baseUrl}}/products/?search=помидор
+GET {{baseUrl}}/products/?search=яблоко
 Content-Type: application/json
 
 ###
@@ -49,12 +68,12 @@ Content-Type: application/json
   "address": "мой адрес не дом и не улица, мой адрес сегодня такой: www.ленинград-спб.ru3",
   "positions": [
     {
-      "product": 2,
+      "product": 1,
       "quantity": 250,
       "price": 120.50
     },
     {
-      "product": 3,
+      "product": 2,
       "quantity": 100,
       "price": 180
     }
@@ -70,12 +89,12 @@ Content-Type: application/json
 {
   "positions": [
     {
-      "product": 2,
+      "product": 1,
       "quantity": 100,
       "price": 130.80
     },
     {
-      "product": 3,
+      "product": 2,
       "quantity": 243,
       "price": 145
     }
@@ -86,4 +105,9 @@ Content-Type: application/json
 
 # поиск складов, где есть определенный продукт
 GET {{baseUrl}}/stocks/?products=2
+Content-Type: application/json
+
+###
+# поиск складов, где есть определенный продукт
+GET {{baseUrl}}/stocks/?search=поми
 Content-Type: application/json
