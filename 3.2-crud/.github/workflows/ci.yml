@@ -1,0 +1,72 @@
+name: DjangoCICD
+
+on:
+    push:
+        branches: [video]
+
+jobs:
+    tests:
+        runs-on: ubuntu-22.04
+        env:
+            SECRET_KEY: ${{ secrets.SECRET_KEY }}
+            DEBUG: ${{ secrets.DEBUG }}
+            ALLOWED_HOSTS: ${{ secrets.ALLOWED_HOSTS }}
+            DB_PORT: ${{ secrets.PG_PORT }}
+            DATABASE_HOST: ${{ secrets.DB_HOST }}
+            DATABASE_PASSWORD: ${{ secrets.DB_PASSWORD }}
+            DATABASE_NAME: ${{ secrets.DB_NAME }}
+            DATABASE_USER: ${{ secrets.DB_USER }}
+            DATABASE_ENGINE: ${{ secrets.DB_ENGINE }}
+        services:
+            postgres_main:
+                image: postgres:12
+
+                env:
+                    POSTGRES_USER: ${{ env.DATABASE_USER }}
+                    POSTGRES_PASSWORD: ${{ env.DATABASE_PASSWORD }}
+                    POSTGRES_DB: ${{ env.DATABASE_NAME }}
+                
+                ports:
+                    - 5432:5432
+
+                options:
+                    --health-cmd pg_isready
+                    --health-interval 5s
+                    --health-timeout 5s
+                    --health-retries 5    
+        steps:
+        - name: Проверка репозитория на наличие обновлений
+          uses: actions/checkout@v3
+
+
+        - name: Установка Python
+          uses: actions/setup-python@v3
+          with:
+            python-version: 3.8
+            
+        - name: Установка зависимостей
+          run: pip install -r requirements.txt
+
+        - name: Линтинг
+          run: flake8 logistic --exclude=logistic/migrations
+
+        - name: Тестирование
+          run: python manage.py test
+          env:
+            SECRET_KEY: ${{ env.SECRET_KEY }}
+            DEBUG: ${{ env.DEBUG }}
+            ALLOWED_HOSTS: ${{ env.ALLOWED_HOSTS }}
+            DB_ENGINE: ${{ env.DATABASE_ENGINE }}
+            DB_USER: ${{ env.DATABASE_USER }}
+            DB_PASSWORD: ${{ env.DATABASE_PASSWORD }}
+            DB_NAME: ${{ env.DATABASE_NAME }}
+            DB_HOST: ${{ env.DATABASE_HOST }}
+            DB_PORT: ${{ env.DB_PORT }}
+  
+        - name: Деплой
+          uses: appleboy/ssh-action@master
+          with:
+            host: ${{ secrets.SSH_HOST }}
+            username: ${{ secrets.SSH_USER }}
+            password: ${{ secrets.SSH_PASSWORD }}
+            script: PASSWORD="$password" expect /home/medy/Task_django/3.2-crud/stocks_products/deploy.exp
