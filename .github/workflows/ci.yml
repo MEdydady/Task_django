@@ -49,9 +49,9 @@ jobs:
 
         - name: Линтинг
           # command: |
-          #   cd /home/medy/Desktop/Python_my_git/Task_django/.github/workflows/ci.yml
+            # cd /home/medy/Desktop/Python_my_git/Task_django/.github/workflows/ci.yml
             
-          run: flake8  --exclude=logistic/migrations
+          run: flake8 ./3.2-crud/stocks_products/logistic  --exclude=logistic/migrations
 
         - name: Тестирование
           run: python manage.py test
