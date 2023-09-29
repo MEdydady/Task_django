@@ -1,5 +1,3 @@
 #!/bin/bash/expect
 spawn /home/medy/Task_django/3.2-crud/stocks_products/deploy.sh
-# expect "password"
-# send -- "NiMtAs#pAa9X\r"
 expect eof
