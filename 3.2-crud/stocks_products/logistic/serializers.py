@@ -26,7 +26,9 @@ class StockSerializer(serializers.ModelSerializer):
         stock = Stock.objects.create(**validated_data)
         for position in positions:
             product = position.pop("product")
-            StockProduct.objects.create(stock=stock, product=product, **position)
+            StockProduct.objects.create(
+                stock=stock, product=product, **position  # длинная строка
+            )
         return stock
 
     def update(self, instance, validated_data):
