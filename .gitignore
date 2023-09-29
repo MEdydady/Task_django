@@ -18,3 +18,9 @@ settings_local.py
 
 ### OS specific ###
 .DS_Store
+
+deploy.exp
+deploy.sh
+
+.env
+
