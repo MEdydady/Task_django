@@ -6,4 +6,5 @@ __pycache__/
 .env
 .idea/
 .vscode/
-
+deploy.exp
+deploy.sh
