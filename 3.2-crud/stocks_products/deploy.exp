@@ -1,3 +1,0 @@
-#!/bin/bash/expect
-spawn /home/medy/Task_django/3.2-crud/stocks_products/deploy.sh
-expect eof
