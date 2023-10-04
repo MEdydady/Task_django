@@ -1,0 +1,35 @@
+version: '3.9'
+
+volumes:
+  postgres_data:
+
+services:
+  backend:
+    build: .
+    command: gunicorn stocks_products.wsgi:application --bind 0.0.0.0:8000
+    volumes:
+      - .:/code/static
+    depends_on:
+      - postgres
+
+  postgres:
+    image: 'postgres'
+    ports:
+      - 5432:5432
+    environment:
+      - POSTGRES_DB=mydb
+      - POSTGRES_USER=myuser
+      - POSTGRES_PASSWORD=mypassword
+    volumes:
+      - postgres_data:/var/lib/postgresql/data/
+      - ./logs:/var/logs
+    restart: unless-stopped
+
+  nginx:
+    image: nginx
+    ports:
+      - "80:80"
+    volumes:
+      - ./nginx.conf:/etc/nginx/nginx.conf
+    depends_on:
+      - backend
